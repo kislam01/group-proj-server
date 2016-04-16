@@ -21,3 +21,4 @@ var MongoClient = require('mongodb').MongoClient, format = require('util').forma
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
 });
+
