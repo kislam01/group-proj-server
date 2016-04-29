@@ -1,0 +1,57 @@
+<!doctype html> 
+<html>
+<head>
+  <title>facebookDemo</title>
+</head>
+<body>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '876024232520179',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+function login() {
+  FB.login(function(response) {
+    if (response.status === 'connected') {
+        alert("connected");
+    } else if (response.status === 'not_authorized') {
+        alert("not authorized");
+    } else {
+        alert('You are not logged into Facebook.');
+    }
+  });
+}
+function getInfo() {
+  FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
+          alert("Hello, " + response.first_name + " " + response.last_name + ", ID #" + response.id);
+  });
+}
+
+function post() {
+        var msg = prompt("give me a post!", "example");
+        FB.api('/me/feed', 'post', { message: msg }, function(response) {
+          if (!response || response.error) {
+            alert('Error occured');
+          } else {
+            alert('Post ID: ' + response.id);
+          }
+        });
+    }
+</script>
+<button onclick="login()"> login </button>
+<button onclick="getInfo()"> getInfo </button>
+<button onclick="post()"> post </button>
+</body>
+</html>
